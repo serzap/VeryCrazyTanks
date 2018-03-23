@@ -4,32 +4,35 @@
 
 #include <utility>
 #include <vector>
+#include "Constants.h"
+#include "Map.h"
 
 class Entity {
 public:
     Entity();
-    Entity(int x, int y, int hp, char texture);
 
-    const int &getX();
+    Entity(int x, int y, int hp);
 
-    void setX(int x);
+    const int &getX() const;
 
-    const int &getY();
+    void setX(const int &x);
 
-    void setY(int y);
+    const int &getY() const;
 
-    virtual std::vector<std::pair<int, int>> getBounds() = 0;
+    void setY(const int &y);
 
     void getDamage();
 
     bool isDestroyed();
 
-    virtual void draw(char **map) = 0;
+    virtual std::vector<std::pair<int, int>> getBounds() = 0;
+
+    virtual void draw(Map &map) = 0;
+
 protected:
     int m_x;
     int m_y;
     int m_hitPoints;
-    char m_texture;
 };
 
 

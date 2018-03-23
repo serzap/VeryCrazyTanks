@@ -1,6 +1,10 @@
 #include <iostream>
-
+#include "BattleField.h"
 int main() {
-    std::cout << "Very Crazy Tanks" << std::endl;
+    std::srand(time(0));
+    BattleField b;
+    b.init();
+    b.generate();
+
     return 0;
 }

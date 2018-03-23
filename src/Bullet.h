@@ -1,7 +1,6 @@
 #ifndef VERYCRAZYTANKS_BULLET_H
 #define VERYCRAZYTANKS_BULLET_H
 
-#include "Constants.h"
 #include "Entity.h"
 
 
@@ -13,7 +12,12 @@ public:
 
     void move();
 
+    std::vector<std::pair<int, int>> getBounds() override ;
+
+    void draw(Map& map) override;
+
 private:
+    char m_texture;
     int m_speed;
     Direction m_dir;
     Type m_type;

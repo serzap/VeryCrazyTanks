@@ -1,8 +1,6 @@
 #ifndef VERYCRAZYTANKS_TANK_H
 #define VERYCRAZYTANKS_TANK_H
 
-#include "Entity.h"
-#include "Constants.h"
 #include "Bullet.h"
 
 
@@ -18,9 +16,10 @@ public:
 
     std::vector<std::pair<int, int>> getBounds() override;
 
-    void draw(char **map) override;
+    void draw(Map &map) override;
 
 private:
+    char m_texture;
     int m_speed;
     Direction m_dir;
     Type m_type;

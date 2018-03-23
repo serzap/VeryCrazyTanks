@@ -3,15 +3,17 @@
 
 #include <vector>
 #include <ctime>
-#include "Constants.h"
+#include <cstdlib>
 #include "Wall.h"
 #include "Tank.h"
+#include "Constants.h"
 
 
 class BattleField {
 public:
     BattleField();
 
+    void init();
     void generate();
     void handleInput();
     void handleCollisiion();
@@ -19,28 +21,24 @@ public:
     void draw();
 
 private:
-    static const int m_height = MAP_HEIGHT;
-    static const int m_width = MAP_WIDTH;
-    char m_gameMap[m_height][m_width];
+    Map m_gameMap;
 
-    std::vector<Wall> m_walls;
-    Tank m_player;
+    std::vector<Entity *> m_entities;
+
+
     int m_scorePoints;
 
     Direction m_currDir;
     Direction m_lastMoveDir;
 
-    std::vector<Tank> m_enemies;
     int m_enemiesCnt;
-
     clock_t m_start;
     double m_duration;
-
-    std::vector<Bullet> m_bullets;
     bool m_isOver;
     bool m_isVictory;
 
-    void cleanMap();
+    int getRandomNumber(int lower, int upper);
+
 };
 
 

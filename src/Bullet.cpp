@@ -6,7 +6,15 @@ Bullet::Bullet(int x, int y, int hp, char texture, int speed, Direction dir, Typ
         Entity(x,y, hp), m_texture(texture), m_speed(speed), m_dir(dir), m_type(type) {
 }
 
-void Bullet::move() {
+void Bullet::getDamage() {
+    m_hitPoints--;
+}
+
+bool Bullet::isDestroyed() {
+    return m_hitPoints <= 0;
+}
+
+void Bullet::update() {
     switch (m_dir) {
         case Direction::UP:
             m_y -= m_speed;
@@ -23,7 +31,7 @@ void Bullet::move() {
         case Direction::STOP:
             break;
     }
-}
+};
 
 std::vector<std::pair<int, int>> Bullet::getBounds() {
     std::vector<std::pair<int,int>> bounds;
@@ -32,7 +40,8 @@ std::vector<std::pair<int, int>> Bullet::getBounds() {
 
 void Bullet::draw(Map& map) {
     map[m_y][m_x] = m_texture;
-};
+}
+
 
 
 

@@ -8,12 +8,17 @@ public:
     Gold();
     Gold(int x, int y, int hp, char texture);
 
-    std::vector<std::pair<int, int>> getBounds() override ;
+    void getDamage() override;
+
+    bool isDestroyed() override;
+
+    std::vector<std::pair<int, int>> getBounds() override;
+
+    void update() override;
 
     void draw(Map& map) override;
 private:
     char m_texture;
 };
-
 
 #endif //VERYCRAZYTANKS_GOLD_H

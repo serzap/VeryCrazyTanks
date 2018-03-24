@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include "Wall.h"
 #include "Tank.h"
+#include "Fortress.h"
 #include "Constants.h"
 
 
@@ -16,7 +17,7 @@ public:
     void init();
     void generate();
     void handleInput();
-    void handleCollisiion();
+    void handleCollision();
     void update();
     void draw();
 
@@ -25,6 +26,9 @@ private:
 
     std::vector<Entity *> m_entities;
 
+    Tank * player;
+
+    Entity * fortress;
 
     int m_scorePoints;
 

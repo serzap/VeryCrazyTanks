@@ -1,5 +1,6 @@
 #include "BattleField.h"
 
+
 BattleField::BattleField() = default;
 
 void BattleField::init() {
@@ -9,6 +10,17 @@ void BattleField::init() {
 }
 
 void BattleField::generate() {
+    //Generate player
+    int playerX = m_gameMap.getWidth() / 2;
+    int playerY = m_gameMap.getHeight() - 2;
+    player = new Tank(playerX, playerY,
+                      Constants::PLAYER_HP, Constants::PLAYER_TEXTURE, Constants::PLAYER_SPEED,
+                      Direction::STOP, Type::PLAYER);
+    //Generate fortress
+    int fortressX = m_gameMap.getWidth() / 2 - 5;
+    int fortressY = m_gameMap.getHeight() - 2;
+
+    fortress = new Fortress(fortressX, fortressY);
     //Generate walls
     for (int i = 0; i < Constants::WALL_COUNT; ++i) {
         m_entities.push_back(
@@ -18,9 +30,9 @@ void BattleField::generate() {
 
     }
     //Generate player
-    m_entities.push_back(new Tank(m_gameMap.getWidth() / 2, m_gameMap.getHeight() - 2,
-                                  Constants::PLAYER_HP, Constants::PLAYER_TEXTURE, Constants::PLAYER_SPEED,
-                                  Direction::STOP, Type::PLAYER));
+    player = new Tank(m_gameMap.getWidth() / 2, m_gameMap.getHeight() - 2,
+                      Constants::PLAYER_HP, Constants::PLAYER_TEXTURE, Constants::PLAYER_SPEED,
+                      Direction::STOP, Type::PLAYER);
     //Generate enemies
     for (int i = 0; i < m_enemiesCnt; ++i) {
         int enemyPosX = 0;
@@ -39,34 +51,64 @@ void BattleField::generate() {
                                       Constants::ENEMY_HP, Constants::ENEMY_TEXTURE, Constants::ENEMY_SPEED,
                                       Direction::STOP, Type::ENEMY));
     }
-    draw();
 }
 
 void BattleField::handleInput() {
-
-
+    /*
+    if (GetAsyncKeyState(VK_UP))
+    {
+        player.setDir(direction::UP);
+        lastMoveDir = direction::UP;
+    }
+    else if (GetAsyncKeyState(VK_RIGHT))
+    {
+        player.setDir(direction::RIGHT);
+        lastMoveDir = direction::RIGHT;
+    }
+    else if (GetAsyncKeyState(VK_DOWN))
+    {
+        player.setDir(direction::DOWN);
+        lastMoveDir = direction::DOWN;
+    }
+    else if (GetAsyncKeyState(VK_LEFT))
+    {
+        player.setDir(direction::LEFT);
+        lastMoveDir = direction::LEFT;
+    }
+    else if (GetAsyncKeyState(VK_SPACE)) {
+     Bullet b = player.shoot();
+    }
+    else player.setDir(direction::STOP);
+*/
+    int choice = getRandomNumber(0, 1);
+    if (choice == 0) {
+        int chanceToMove = 30;
+        if (getRandomNumber(1, 100) <= chanceToMove) {
+            Direction dir = static_cast<Direction >(getRandomNumber(1, 5));
+            player->setDirection(dir);
+        }
+    }
+    else{
+        //shoot
+        m_entities.push_back(new Bullet(player->getX(),player->getY(),Constants::BULLET_HP,Constants::BULLET_TEXTURE,Constants::BULLET_SPEED,player->getDirection(),Type::PLAYER));
+    }
 }
 
 void BattleField::update() {
-    /*
-    for(int i = 0; i < m_entities.size(); ++i){
-        Tank *t = dynamic_cast<Tank *>(m_entities[i]);
-        if(t){
-            t->move();
-        }
-        Bullet *b = dynamic_cast<Bullet *>(m_entities[i]);
-        if(b){
-            b->move();
-        }
-    }*/
-
+    player->update();
+    fortress->draw(m_gameMap);
+    for (auto &entity : m_entities) {
+        entity->update();
+    }
 }
 
-void BattleField::handleCollisiion() {
+void BattleField::handleCollision() {
 }
 
 
 void BattleField::draw() {
+    player->draw(m_gameMap);
+    fortress->draw(m_gameMap);
     for (auto &entity : m_entities) {
         entity->draw(m_gameMap);
     }

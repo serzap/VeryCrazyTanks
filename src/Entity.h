@@ -7,12 +7,16 @@
 #include "Constants.h"
 #include "Map.h"
 
+
 class Entity {
 public:
     Entity();
 
     Entity(int x, int y, int hp);
 
+    virtual ~Entity();
+
+    //Getters and Setters
     const int &getX() const;
 
     void setX(const int &x);
@@ -21,11 +25,14 @@ public:
 
     void setY(const int &y);
 
-    void getDamage();
+    //Functions
+    virtual void getDamage() = 0;
 
-    bool isDestroyed();
+    virtual bool isDestroyed() = 0;
 
     virtual std::vector<std::pair<int, int>> getBounds() = 0;
+
+    virtual void update() = 0;
 
     virtual void draw(Map &map) = 0;
 
@@ -34,6 +41,5 @@ protected:
     int m_y;
     int m_hitPoints;
 };
-
 
 #endif //VERYCRAZYTANKS_ENTITY_H

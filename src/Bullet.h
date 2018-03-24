@@ -10,9 +10,13 @@ public:
 
     Bullet(int x, int y, int hp, char texture, int speed, Direction dir, Type type);
 
-    void move();
+    void getDamage() override;
 
-    std::vector<std::pair<int, int>> getBounds() override ;
+    bool isDestroyed() override ;
+
+    std::vector<std::pair<int, int>> getBounds() override;
+
+    void update() override ;
 
     void draw(Map& map) override;
 

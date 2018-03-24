@@ -10,11 +10,17 @@ public:
 
     Tank(int x, int y, int hp, char texture, int speed, Direction dir, Type type);
 
-    void move();
+    inline const Direction &getDirection() const { return m_dir; }
 
-    Bullet &shoot();
+    inline void setDirection(const Direction &dir) { m_dir = dir; }
+
+    void getDamage() override;
+
+    bool isDestroyed() override;
 
     std::vector<std::pair<int, int>> getBounds() override;
+
+    void update() override;
 
     void draw(Map &map) override;
 

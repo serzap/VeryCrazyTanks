@@ -8,7 +8,13 @@ public:
     Wall();
     Wall(int x, int y, int hp, char texture, int length, Position pos);
 
-    std::vector<std::pair<int, int>> getBounds() override ;
+    std::vector<std::pair<int, int>> getBounds() override;
+
+    void getDamage() override;
+
+    bool isDestroyed() override;
+
+    void update() override;
 
     void draw(Map& map) override;
 private:

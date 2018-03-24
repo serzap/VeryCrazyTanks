@@ -33,6 +33,9 @@ namespace Constants {
     const int BULLET_SPEED = 1;
     const int BULLET_HP = 1;
     const char BULLET_TEXTURE = '*';
+    //Gold
+    const int GOLD_HP = 1;
+    const int GOLD_TEXTURE = 'G';
 
 //BattleField
 }

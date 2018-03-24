@@ -2,6 +2,8 @@
 
 Entity::Entity() = default;
 
+Entity::~Entity() {}
+
 Entity::Entity(int x, int y, int hp) : m_x(x), m_y(y), m_hitPoints(hp){}
 
 const int &Entity::getX() const{
@@ -20,12 +22,6 @@ void Entity::setY(const int& y) {
     m_y = y;
 }
 
-void Entity::getDamage() {
-    m_hitPoints--;
-}
 
-bool Entity::isDestroyed() {
-    return m_hitPoints <= 0;
-}
 
 

@@ -7,11 +7,21 @@ Wall::Wall(int x, int y, int hp, char texture, int length, Position pos) :
 
 }
 
+void Wall::getDamage() {
+    m_hitPoints--;
+}
+
+bool Wall::isDestroyed() {
+    return m_hitPoints <= 0;
+}
+
 std::vector<std::pair<int, int>> Wall::getBounds() {
     std::vector<std::pair<int, int>> bounds;
     bounds.emplace_back(m_x, m_y);
     return bounds;
 }
+
+void Wall::update() {}
 
 void Wall::draw(Map &map) {
     for (int i = 0; i < m_length; ++i) {
@@ -23,3 +33,6 @@ void Wall::draw(Map &map) {
         }
     }
 }
+
+
+

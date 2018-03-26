@@ -2,23 +2,25 @@
 #define VERYCRAZYTANKS_GOLD_H
 
 #include "Entity.h"
+#include "Tank.h"
+#include "Bullet.h"
 
-class Gold : Entity {
+class Entity;
+class Bullet;
+class Tank;
+
+class Gold : public Entity {
 public:
-    Gold();
-    Gold(int x, int y, int hp, char texture);
+	Gold();
+	Gold(int x, int y, int hp, DrawingStrategy* ds);
 
-    void getDamage() override;
+	void getDamage() override;
 
-    bool isDestroyed() override;
+	bool isDestroyed() override;
 
-    std::vector<std::pair<int, int>> getBounds() override;
+	void update() override;
 
-    void update() override;
-
-    void draw(Map& map) override;
-private:
-    char m_texture;
+	void collideWith(Entity& other) override;
 };
 
 #endif //VERYCRAZYTANKS_GOLD_H

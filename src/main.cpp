@@ -1,13 +1,8 @@
 #include <iostream>
-#include "BattleField.h"
+#include "Game.h"
 int main() {
-    for(int i = 0; i < 1000; ++i){
-    std::srand(time(0));
-    BattleField b;
-    b.init();
-    b.generate();
-    b.update();
-    b.draw();}
-
-    return 0;
+	std::srand(time(0));
+	Game game;
+	game.run();
+	return 0;
 }

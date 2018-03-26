@@ -1,30 +1,27 @@
-#include "Wall.h"
+#include "Border.h"
 
-Wall::Wall() = default;
+Border::Border(){}
 
-Wall::Wall(int x, int y, int hp, DrawingStrategy* ds) : Entity(x, y, hp, ds)  {}
+Border::Border(int x, int y, int hp, DrawingStrategy* ds) : Entity(x, y, hp, ds) {}
 
-void Wall::getDamage() {
-	m_hitPoints--;
-}
+Border::~Border(){}
 
-bool Wall::isDestroyed() {
-	return m_hitPoints <= 0;
-}
+void Border::getDamage(){}
 
-void Wall::update() {/*nothing*/}
+bool Border::isDestroyed(){return false;}
 
-void Wall::collideWith(Entity & other)
+void Border::update(){}
+
+void Border::collideWith(Entity & other)
 {
 	if (Tank* tank = dynamic_cast<Tank*>(&other)) {
 		if (this->m_x == tank->getX() && this->m_y == tank->getY()) {
 			tank->setDirection(getOppositeDirection(tank->getDirection()));
 			tank->update();
-		}	
+		}
 	}
 	else if (Bullet* bullet = dynamic_cast<Bullet*>(&other)) {
 		if (this->m_x == bullet->getX() && this->m_y == bullet->getY()) {
-			this->getDamage();
 			bullet->getDamage();
 		}
 	}
@@ -32,5 +29,4 @@ void Wall::collideWith(Entity & other)
 		//do nothing
 	}
 }
-
 

@@ -1,45 +1,53 @@
 #ifndef VERYCRAZYTANKS_ENTITY_H
 #define VERYCRAZYTANKS_ENTITY_H
 
-
 #include <utility>
 #include <vector>
 #include "Constants.h"
+#include "DrawingStrategy.h"
 #include "Map.h"
-
 
 class Entity {
 public:
-    Entity();
+	Entity();
 
-    Entity(int x, int y, int hp);
+	Entity(int x, int y, int hp, DrawingStrategy* ds);
 
-    virtual ~Entity();
+	virtual ~Entity();
 
-    //Getters and Setters
-    const int &getX() const;
+	//Getters and Setters
+	inline const int &getX() const { return m_x; }
 
-    void setX(const int &x);
+	void setX(const int &x) { m_x = x; }
 
-    const int &getY() const;
+	const int &getY() const { return m_y; }
 
-    void setY(const int &y);
+	void setY(const int &y) { m_y = y; }
 
-    //Functions
-    virtual void getDamage() = 0;
+	const int &getHP() const { return m_hitPoints; }
 
-    virtual bool isDestroyed() = 0;
+	void setHP(const int &hp) { m_hitPoints = hp; }
 
-    virtual std::vector<std::pair<int, int>> getBounds() = 0;
+	const  DrawingStrategy *getDrawingSrategy() const { return m_ds; }
 
-    virtual void update() = 0;
+	void setHP(DrawingStrategy * ds) { m_ds = ds; }
 
-    virtual void draw(Map &map) = 0;
+	//Functions
+	virtual void getDamage() = 0;
+
+	virtual bool isDestroyed() = 0;
+
+	virtual void update() = 0;
+
+	virtual void collideWith(Entity& other) = 0;
+
+	virtual void draw(Map &map);
 
 protected:
-    int m_x;
-    int m_y;
-    int m_hitPoints;
+	int m_x;
+	int m_y;
+	int m_hitPoints;
+	DrawingStrategy* m_ds;
 };
 
 #endif //VERYCRAZYTANKS_ENTITY_H

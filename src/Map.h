@@ -7,23 +7,23 @@
 
 class Map {
 public:
-    Map();
+	Map();
 
-    void init(int width, int height);
+	void init(int width, int height);
 
-    const int& getWidth() const;
-    const int& getHeight() const;
+	const int& getWidth() const;
+	const int& getHeight() const;
 
-    std::string& operator[](int index) {
-        return m_field[index];
-    }
-    void display();
-    void clear();
+	std::string& operator[](int index) {
+		return m_field[index];
+	}
+	void display();
+	void clear();
 
 private:
-    std::vector<std::string> m_field;
-    int m_width;
-    int m_height;
+	std::vector<std::string> m_field;
+	int m_width;
+	int m_height;
 };
 
 #endif //VERYCRAZYTANKS_MAP_H

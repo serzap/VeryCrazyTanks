@@ -1,34 +1,44 @@
 #ifndef VERYCRAZYTANKS_TANK_H
 #define VERYCRAZYTANKS_TANK_H
 
+#include "Utilities.h"
+#include "Entity.h"
+#include "Border.h"
+#include "Wall.h"
+#include "Gold.h"
 #include "Bullet.h"
 
+class Border;
+class Wall;
+class Gold;
+class Bullet;
 
 class Tank : public Entity {
 public:
-    Tank();
+	Tank();
 
-    Tank(int x, int y, int hp, char texture, int speed, Direction dir, Type type);
+	Tank(int x, int y, int hp, DrawingStrategy* ds, int speed, Direction dir, Type type);
 
-    inline const Direction &getDirection() const { return m_dir; }
+	inline const Direction &getDirection() const { return m_dir; }
 
-    inline void setDirection(const Direction &dir) { m_dir = dir; }
+	inline void setDirection(const Direction &dir) { m_dir = dir; }
 
-    void getDamage() override;
+	inline const Type &getType() const { return m_type; }
 
-    bool isDestroyed() override;
+	inline void setType(const Type& type) { m_type = type; }
 
-    std::vector<std::pair<int, int>> getBounds() override;
+	void getDamage() override;
 
-    void update() override;
+	bool isDestroyed() override;
 
-    void draw(Map &map) override;
+	void update() override;
+
+	void collideWith(Entity& other) override;
 
 private:
-    char m_texture;
-    int m_speed;
-    Direction m_dir;
-    Type m_type;
+	int m_speed;
+	Direction m_dir;
+	Type m_type;
 };
 
 

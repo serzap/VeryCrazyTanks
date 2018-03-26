@@ -2,29 +2,42 @@
 #define VERYCRAZYTANKS_BULLET_H
 
 #include "Entity.h"
+#include "Border.h"
+#include "Tank.h"
+#include "Wall.h"
 
+class Border;
+class Wall;
+class Gold;
+class Tank;
+class Map;
 
 class Bullet : public Entity {
 public:
-    Bullet();
+	Bullet();
 
-    Bullet(int x, int y, int hp, char texture, int speed, Direction dir, Type type);
+	Bullet(int x, int y, int hp, DrawingStrategy* ds, int speed, Direction dir, Type type);
 
-    void getDamage() override;
+	inline const Direction &getDirection() const { return m_dir; }
 
-    bool isDestroyed() override ;
+	inline void setDirection(const Direction &dir) { m_dir = dir; }
 
-    std::vector<std::pair<int, int>> getBounds() override;
+	inline const Type &getType() const { return m_type; }
 
-    void update() override ;
+	inline void setType(const Type& type) { m_type = type; }
 
-    void draw(Map& map) override;
+	void getDamage() override;
+
+	bool isDestroyed() override;
+
+	void update() override;
+
+	void collideWith(Entity& other) override;
 
 private:
-    char m_texture;
-    int m_speed;
-    Direction m_dir;
-    Type m_type;
+	int m_speed;
+	Direction m_dir;
+	Type m_type;
 };
 
 

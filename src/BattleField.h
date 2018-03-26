@@ -2,47 +2,46 @@
 #define VERYCRAZYTANKS_BATTLEFIELD_H
 
 #include <vector>
+#include <algorithm>
 #include <ctime>
 #include <cstdlib>
+#include <Windows.h>
 #include "Wall.h"
 #include "Tank.h"
-#include "Fortress.h"
 #include "Constants.h"
+#include "Utilities.h"
 
 
 class BattleField {
 public:
-    BattleField();
+	BattleField();
+	~BattleField();
 
-    void init();
-    void generate();
-    void handleInput();
-    void handleCollision();
-    void update();
-    void draw();
+	void generate();
+	void handleInput();
+	void handleCollision();
+	void update();
+	void draw();
+
+	bool isOver();
+	bool isVictory();
 
 private:
-    Map m_gameMap;
+	Map m_gameMap;
 
-    std::vector<Entity *> m_entities;
+	Entity * player;
+	Entity* gold;
+	std::vector<Entity*> m_entities;
 
-    Tank * player;
+	Direction m_currDir;
+	int m_scorePoints;
+	int m_enemiesCnt;
 
-    Entity * fortress;
+	clock_t m_start;
+	double m_duration;
 
-    int m_scorePoints;
-
-    Direction m_currDir;
-    Direction m_lastMoveDir;
-
-    int m_enemiesCnt;
-    clock_t m_start;
-    double m_duration;
-    bool m_isOver;
-    bool m_isVictory;
-
-    int getRandomNumber(int lower, int upper);
-
+	bool m_over;
+	bool m_victory;
 };
 
 

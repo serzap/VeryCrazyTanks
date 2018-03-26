@@ -1,5 +1,5 @@
-#ifndef VERYCRAZYTANKS_WALL_H
-#define VERYCRAZYTANKS_WALL_H
+#ifndef VERYCRAZYTANKS_BORDER_H
+#define VERYCRAZYTANKS_BORDER_H
 
 #include "Entity.h"
 #include "Tank.h"
@@ -9,10 +9,11 @@ class Entity;
 class Bullet;
 class Tank;
 
-class Wall : public Entity {
+class Border : public Entity {
 public:
-	Wall();
-	Wall(int x, int y, int hp, DrawingStrategy* ds);
+	Border();
+	Border(int x, int y, int hp, DrawingStrategy* ds);
+	~Border();
 
 	void getDamage() override;
 
@@ -24,4 +25,5 @@ public:
 
 };
 
-#endif //VERYCRAZYTANKS_WALL_H
+#endif
+

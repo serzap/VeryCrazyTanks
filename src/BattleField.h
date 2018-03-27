@@ -29,8 +29,8 @@ public:
 private:
 	Map m_gameMap;
 
-	Entity * player;
-	Entity* gold;
+	Entity * m_player;
+	Entity* m_gold;
 	std::vector<Entity*> m_entities;
 
 	Direction m_currDir;

@@ -16,7 +16,7 @@ void Game::run()
 		bf.update();
 		bf.handleCollision();
 		bf.draw();
-		Sleep(50);
+		Sleep(250);
 	}
 	system("CLS");
 	std::cout << "\n\n\n\n\n" << std::setfill(' ') << std::setw(37) << (bf.isOver() ? "YOU LOSE" : "YOU WIN") << std::endl;

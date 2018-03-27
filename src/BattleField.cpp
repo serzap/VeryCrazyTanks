@@ -37,10 +37,10 @@ void BattleField::generate() {
 	//Generate player
 	int playerX = m_gameMap.getWidth() / 2;
 	int playerY = m_gameMap.getHeight() - 2;
-	player = new Tank(playerX, playerY,
+	m_player = new Tank(playerX, playerY,
 		Constants::PLAYER_HP, new PlayerTankDrawingStrategy(), Constants::PLAYER_SPEED,
 		Direction::STOP, Type::PLAYER);
-	m_entities.push_back(player);
+	m_entities.push_back(m_player);
 
 	//Generate fortress
 	int fortressX = m_gameMap.getWidth() / 2 - 5;
@@ -51,8 +51,8 @@ void BattleField::generate() {
 		{
 			if (i == 1 && j == 1)
 			{
-				gold = new Gold(fortressX + j, fortressY + i, Constants::GOLD_HP, new GoldDrawingStrategy());
-				m_entities.push_back(gold);
+				m_gold = new Gold(fortressX + j, fortressY + i, Constants::GOLD_HP, new GoldDrawingStrategy());
+				m_entities.push_back(m_gold);
 			}
 			else
 			{
@@ -104,34 +104,34 @@ void BattleField::generate() {
 void BattleField::handleInput() {
 	if (GetAsyncKeyState(0x57))
 	{
-		static_cast<Tank*>(player)->setDirection(Direction::UP);
+		static_cast<Tank*>(m_player)->setDirection(Direction::UP);
 		m_currDir = Direction::UP;
 	}
 	else if (GetAsyncKeyState(0x44))
 	{
-		static_cast<Tank*>(player)->setDirection(Direction::RIGHT);
+		static_cast<Tank*>(m_player)->setDirection(Direction::RIGHT);
 		m_currDir = Direction::RIGHT;
 	}
 	else if (GetAsyncKeyState(0x53))
 	{
-		static_cast<Tank*>(player)->setDirection(Direction::DOWN);
+		static_cast<Tank*>(m_player)->setDirection(Direction::DOWN);
 		m_currDir = Direction::DOWN;
 	}
 	else if (GetAsyncKeyState(0x41))
 	{
-		static_cast<Tank*>(player)->setDirection(Direction::LEFT);
+		static_cast<Tank*>(m_player)->setDirection(Direction::LEFT);
 		m_currDir = Direction::LEFT;
 	}
 	else if (GetAsyncKeyState(VK_SPACE)) {
 		//shoot
-		m_entities.push_back(new Bullet(player->getX(), player->getY(), Constants::BULLET_HP, new PlayerBulletDrawingStrategy(), Constants::BULLET_SPEED, m_currDir, Type::PLAYER));
+		m_entities.push_back(new Bullet(m_player->getX(), m_player->getY(), Constants::BULLET_HP, new PlayerBulletDrawingStrategy(), Constants::BULLET_SPEED, m_currDir, Type::PLAYER));
 	}
-	else static_cast<Tank*>(player)->setDirection(Direction::STOP);
+	else static_cast<Tank*>(m_player)->setDirection(Direction::STOP);
 }
 
 void BattleField::update() {
 	for (size_t i = 0; i < m_entities.size(); ++i) {
-		if (typeid(*m_entities[i]) == typeid(Tank) && m_entities[i] != player)
+		if (typeid(*m_entities[i]) == typeid(Tank) && m_entities[i] != m_player)
 		{
 			int chanceToMove = 80;
 			if (getRandomNumber(1, 100) <= chanceToMove) {
@@ -160,6 +160,7 @@ void BattleField::handleCollision() {
 			Tank* t = dynamic_cast<Tank*>(m_entities[i]);
 			if (t && t->getType() == Type::ENEMY) {
 				m_enemiesCnt--;
+				m_scorePoints++;
 			}
 		}
 	}
@@ -177,7 +178,7 @@ void BattleField::draw() {
 	}
 	m_gameMap.display();
 	std::cout << std::endl;
-	std::cout << " HEALTH POINTS - " << player->getHP() << std::endl;
+	std::cout << " HEALTH POINTS - " << m_player->getHP() << std::endl;
 	std::cout << " PLAYER SCORE - " << m_scorePoints << std::endl;
 	m_duration = (std::clock() - m_start) / (double)CLOCKS_PER_SEC;
 	int seconds = static_cast<int>(m_duration);
@@ -189,7 +190,7 @@ void BattleField::draw() {
 
 bool BattleField::isOver()
 {
-	return gold->isDestroyed() || player->isDestroyed();
+	return m_gold->isDestroyed() || m_player->isDestroyed();
 }
 
 bool BattleField::isVictory()
